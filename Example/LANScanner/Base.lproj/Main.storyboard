@@ -45,7 +45,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="I3D-f4-Q4e">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="lms-6V-gmZ"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="lms-6V-gmZ">
+                            <connections>
+                                <action selector="restart" destination="IWZ-NG-Pd9" id="1FU-17-eu3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cB8-X6-fCF" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -52,6 +52,10 @@ class LANTableViewController: UITableViewController, LANScannerDelegate {
     @IBAction func restart() {
         
         self.title = "Scanning"
+        
+        self.devices.removeAll()
+        self.tableView.reloadData()
+        
         self.scanner?.stopScan()
         self.scanner?.startScan()
     }
