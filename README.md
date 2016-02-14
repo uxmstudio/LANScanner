@@ -23,6 +23,13 @@ scanner?.startScan()
 ```
 Be sure to implement the delegate LANScannerDelegate
 
+## Get IP address of local device
+```swift
+var netInfo = LANScanner.getLocalAddress()
+print(netInfo.ip)
+print(netInfo.netmask)
+```
+
 ## Interface
 ```swift
 
@@ -33,6 +40,8 @@ var continuous:Bool // When set this will restart the scan when completed
 func startScan() // Begin a scan
 func stopScan() // End a scan
 
+static func getHostName(ipaddress: String) -> String? // Get the hostname from an IP address
+static func getLocalAddress() -> NetInfo? // Get the local devices IP address and 
 
 /// Delegate
 func LANScannerDiscovery(device: LANDevice)

@@ -34,7 +34,7 @@ import ifaddrs
 
 public class LANScanner: NSObject {
     
-    struct NetInfo {
+    public struct NetInfo {
         let ip: String
         let netmask: String
     }
@@ -68,7 +68,7 @@ public class LANScanner: NSObject {
     // MARK: - Actions
     public func startScan() {
         
-        if let localAddress = getLocalAddress() {
+        if let localAddress = LANScanner.getLocalAddress() {
             
             self.localAddress = localAddress.ip
             self.netMask = localAddress.netmask
@@ -127,7 +127,7 @@ public class LANScanner: NSObject {
             /// Send device to delegate
             let device = LANDevice()
             device.ipAddress = "\(self.baseAddress!)\(self.currentHostAddress)"
-            if let hostName = self.getHostName(device.ipAddress) {
+            if let hostName = LANScanner.getHostName(device.ipAddress) {
                 device.hostName = hostName
             }
             
@@ -150,7 +150,7 @@ public class LANScanner: NSObject {
     
     
     // MARK: - Network methods
-    func getHostName(ipaddress: String) -> String? {
+    public static func getHostName(ipaddress: String) -> String? {
         
         var hostName:String? = nil
         var ifinfo: UnsafeMutablePointer<addrinfo> = nil
@@ -177,7 +177,7 @@ public class LANScanner: NSObject {
         return hostName
     }
     
-    func getLocalAddress() -> NetInfo? {
+    public static func getLocalAddress() -> NetInfo? {
         var localAddress:NetInfo?
         
         /// Get list of all interfaces on the local machine:
