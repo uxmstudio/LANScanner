@@ -1,0 +1,6 @@
+framework module Pods_LANScanner_Tests {
+  umbrella header "Pods-LANScanner_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

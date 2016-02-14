@@ -1,0 +1,14 @@
+PODS:
+  - LANScanner (0.1.0)
+
+DEPENDENCIES:
+  - LANScanner (from `../`)
+
+EXTERNAL SOURCES:
+  LANScanner:
+    :path: ../
+
+SPEC CHECKSUMS:
+  LANScanner: 22f74dab294ce95bbbcb9d4c2790f272192c6332
+
+COCOAPODS: 0.39.0
