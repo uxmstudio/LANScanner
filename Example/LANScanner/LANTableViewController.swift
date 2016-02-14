@@ -16,6 +16,8 @@ class LANTableViewController: UITableViewController, LANScannerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = "Scanning"
 
         scanner = LANScanner(delegate: self, continuous: false)
         scanner?.startScan()
@@ -49,6 +51,7 @@ class LANTableViewController: UITableViewController, LANScannerDelegate {
     // MARK - IBActions
     @IBAction func restart() {
         
+        self.title = "Scanning"
         self.scanner?.stopScan()
         self.scanner?.startScan()
     }
@@ -62,11 +65,21 @@ class LANTableViewController: UITableViewController, LANScannerDelegate {
     }
     
     func LANScannerFailed(error: NSError) {
+        
         print("Unable to scan: \(error)")
     }
     
     func LANScannerFinished() {
+        
         print("Finished scanning")
+        self.title = "Finished Scanning"
+    }
+    
+    func LANScannerRestarted() {
+        
+        print("Restarted scanning")
+        self.devices = []
+        self.tableView.reloadData()
     }
 
     

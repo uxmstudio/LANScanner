@@ -27,6 +27,7 @@ Be sure to implement the delegate LANScannerDelegate
 ```swift
 
 /// Public
+var delegate:LANScannerDelegate // Delegate for discovery callbacks
 var continuous:Bool // When set this will restart the scan when completed
 
 func startScan() // Begin a scan
@@ -36,6 +37,7 @@ func stopScan() // End a scan
 /// Delegate
 func LANScannerDiscovery(device: LANDevice)
 func LANScannerFinished()    
+func LANScannerRestarted()
 func LANScannerFailed(error: NSError)  
 ```
 

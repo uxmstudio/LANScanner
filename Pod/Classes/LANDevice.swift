@@ -12,5 +12,4 @@ public class LANDevice: NSObject {
     
     public var ipAddress = ""
     public var hostName = ""
-    public var vendor = ""
 }

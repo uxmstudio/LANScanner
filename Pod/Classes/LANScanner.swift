@@ -9,22 +9,27 @@
 import UIKit
 import ifaddrs
 
-public protocol LANScannerDelegate
+@objc public protocol LANScannerDelegate
 {
     /**
      Triggered when the scanning has discovered a new device
      */
-    func LANScannerDiscovery(device: LANDevice)
+    optional func LANScannerDiscovery(device: LANDevice)
     
     /**
      Triggered when all of the scanning has finished
      */
-    func LANScannerFinished()
+    optional func LANScannerFinished()
+    
+    /**
+     Triggered when the scanner starts over
+     */
+    optional func LANScannerRestarted()
     
     /**
      Triggered when there is an error while scanning
      */
-    func LANScannerFailed(error: NSError)
+    optional func LANScannerFailed(error: NSError)
 }
 
 public class LANScanner: NSObject {
@@ -34,8 +39,10 @@ public class LANScanner: NSObject {
         let netmask: String
     }
     
-    /// The delegate for a monitoring operation.
-    var delegate: LANScannerDelegate?
+    
+    public var delegate: LANScannerDelegate?
+    public var continuous:Bool = true
+    
     
     var localAddress:String?
     var baseAddress:String?
@@ -44,7 +51,11 @@ public class LANScanner: NSObject {
     var netMask:String?
     var baseAddressEnd:Int = 0
     var timerIterationNumber:Int = 0
-    var continuous:Bool = true
+    
+    public override init() {
+        
+        super.init()
+    }
     
     public init(delegate: LANScannerDelegate, continuous: Bool) {
         
@@ -75,12 +86,12 @@ public class LANScanner: NSObject {
                     self.baseAddressEnd = 255
                 }
                 
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "pingAddress", userInfo: nil, repeats: true)
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "pingAddress", userInfo: nil, repeats: true)
             }
         }
         else {
             
-            self.delegate?.LANScannerFailed(NSError(
+            self.delegate?.LANScannerFailed?(NSError(
                 domain: "LANScanner",
                 code: 101,
                 userInfo: [ "error": "Unable to find a local address" ]
@@ -120,7 +131,7 @@ public class LANScanner: NSObject {
                 device.hostName = hostName
             }
             
-            self.delegate?.LANScannerDiscovery(device)
+            self.delegate?.LANScannerDiscovery?(device)
         }
         
         /// When you reach the end, either restart or call it quits
@@ -129,9 +140,10 @@ public class LANScanner: NSObject {
             if continuous {
                 self.timerIterationNumber = 0
                 self.currentHostAddress = 0
+                self.delegate?.LANScannerRestarted?()
             }
             else {
-                self.delegate?.LANScannerFinished()
+                self.delegate?.LANScannerFinished?()
             }
         }
     }
