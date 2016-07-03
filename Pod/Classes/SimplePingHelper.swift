@@ -36,7 +36,7 @@ class SimplePingHelper: NSObject, SimplePingDelegate {
     func start() {
         
         self.simplePing?.start()
-        self.performSelector("endTime", withObject: nil, afterDelay: 1)
+        self.performSelector(#selector(SimplePingHelper.endTime), withObject: nil, afterDelay: 1)
     }
     
     

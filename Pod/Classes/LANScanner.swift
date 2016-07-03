@@ -7,7 +7,16 @@
 //
 
 import UIKit
-import ifaddrs
+
+#if os(OSX)
+    import ifaddrsOSX
+#elseif os(iOS)
+#if (arch(i386) || arch(x86_64))
+    import ifaddrsiOSSim
+    #else
+    import ifaddrsiOS
+#endif
+#endif
 
 @objc public protocol LANScannerDelegate
 {
@@ -78,7 +87,7 @@ public class LANScanner: NSObject {
             
             if netMaskComponents.count == 4 && ipComponents.count == 4 {
                 
-                for (var i:Int = 0; i < 4; i++) {
+                for _ in 0 ..< 4 {
                     
                     self.baseAddress = "\(ipComponents[0]).\(ipComponents[1]).\(ipComponents[2])."
                     self.currentHostAddress = 0
@@ -86,7 +95,7 @@ public class LANScanner: NSObject {
                     self.baseAddressEnd = 255
                 }
                 
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "pingAddress", userInfo: nil, repeats: true)
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: #selector(LANScanner.pingAddress), userInfo: nil, repeats: true)
             }
         }
         else {
@@ -109,9 +118,9 @@ public class LANScanner: NSObject {
     // MARK: - Ping helpers
     func pingAddress() {
         
-        self.currentHostAddress++
+        self.currentHostAddress += 1
         let address:String = "\(self.baseAddress!)\(self.currentHostAddress)"
-        SimplePingHelper.start(address, target: self, selector: "pingResult:")
+        SimplePingHelper.start(address, target: self, selector: #selector(LANScanner.pingResult(_:)))
         if self.currentHostAddress >= 254 && !continuous {
             self.timer?.invalidate()
         }
@@ -119,7 +128,7 @@ public class LANScanner: NSObject {
     
     func pingResult(object:AnyObject) {
         
-        self.timerIterationNumber++
+        self.timerIterationNumber += 1
         
         let success = object["status"] as! Bool
         if success {
