@@ -18,6 +18,7 @@ import UIKit
 #endif
 #endif
 
+
 @objc public protocol LANScannerDelegate
 {
     /**
@@ -53,13 +54,13 @@ open class LANScanner: NSObject {
     open var continuous:Bool = true
     
     
-    var localAddress:String?
-    var baseAddress:String?
-    var currentHostAddress:Int = 0
-    var timer:Timer?
-    var netMask:String?
-    var baseAddressEnd:Int = 0
-    var timerIterationNumber:Int = 0
+    var localAddress: String?
+    var baseAddress: String?
+    var currentHostAddress: Int = 0
+    var timer: Timer?
+    var netMask: String?
+    var baseAddressEnd: Int = 0
+    var timerIterationNumber: Int = 0
     
     public override init() {
         
@@ -162,23 +163,26 @@ open class LANScanner: NSObject {
     open static func getHostName(_ ipaddress: String) -> String? {
         
         var hostName:String? = nil
-        var ifinfo: UnsafeMutablePointer<addrinfo>? = nil
+        var ifinfo: UnsafeMutablePointer<addrinfo>?
         
         /// Get info of the passed IP address
         if getaddrinfo(ipaddress, nil, nil, &ifinfo) == 0 {
-            
-            for (var ptr = ifinfo; ptr != nil; ptr = ptr?.pointee.ai_next) {
+
+            var ptr = ifinfo
+            while ptr != nil {
                 
-                let interface = ptr?.pointee
+                let interface = ptr!.pointee
                 
-                /// Parse the hosname for addresses
+                /// Parse the hostname for addresses
                 var hst = [CChar](repeating: 0, count: Int(NI_MAXHOST))
-                if (getnameinfo(interface?.ai_addr, socklen_t((interface?.ai_addrlen)!), &hst, socklen_t(hst.count),
-                    nil, socklen_t(0), 0) == 0) {
+                if getnameinfo(interface.ai_addr, socklen_t(interface.ai_addrlen), &hst, socklen_t(hst.count),
+                    nil, socklen_t(0), 0) == 0 {
+                    
                         if let address = String(validatingUTF8: hst) {
                             hostName = address
                         }
                 }
+                ptr = interface.ai_next
             }
             freeaddrinfo(ifinfo)
         }
@@ -190,21 +194,24 @@ open class LANScanner: NSObject {
         var localAddress:NetInfo?
         
         /// Get list of all interfaces on the local machine:
-        var ifaddr : UnsafeMutablePointer<ifaddrs> = nil
+        var ifaddr : UnsafeMutablePointer<ifaddrs>? = nil
         if getifaddrs(&ifaddr) == 0 {
             
             /// For each interface ...
-            for (var ptr = ifaddr; ptr != nil; ptr = ptr.memory.ifa_next) {
-                let flags = Int32(ptr.memory.ifa_flags)
-                let interface = ptr.memory
-                var addr = interface.ifa_addr.memory
+            var ptr = ifaddr
+            while ptr != nil {
+                
+                let interface = ptr!.pointee
+                let flags = Int32(interface.ifa_flags)
+                var addr = interface.ifa_addr.pointee
                 
                 /// Check for running IPv4, IPv6 interfaces. Skip the loopback interface.
                 if (flags & (IFF_UP|IFF_RUNNING|IFF_LOOPBACK)) == (IFF_UP|IFF_RUNNING) {
                     if addr.sa_family == UInt8(AF_INET) || addr.sa_family == UInt8(AF_INET6) {
                         
                         /// Narrow it down to just the wifi card
-                        if let name = String.fromCString(interface.ifa_name) , name == "en0" {
+                        let name = String(cString:interface.ifa_name)
+                        if name == "en0" {
                             
                             /// Convert interface address to a human readable string
                             var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
@@ -212,7 +219,7 @@ open class LANScanner: NSObject {
                                 nil, socklen_t(0), NI_NUMERICHOST) == 0) {
                                     if let address = String(validatingUTF8: hostname) {
                                         
-                                        var net = ptr.memory.ifa_netmask.memory
+                                        var net = interface.ifa_netmask.pointee
                                         var netmaskName = [CChar](repeating: 0, count: Int(NI_MAXHOST))
                                         getnameinfo(&net, socklen_t(net.sa_len), &netmaskName, socklen_t(netmaskName.count),
                                             nil, socklen_t(0), NI_NUMERICHOST) == 0
@@ -224,6 +231,7 @@ open class LANScanner: NSObject {
                         }
                     }
                 }
+                ptr = interface.ifa_next
             }
             freeifaddrs(ifaddr)
         }

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "LANScanner"
-  s.version          = "0.1.2"
+  s.version          = "0.2.0"
   s.summary          = "Scan a Wi-Fi network for devices."
   s.description      = "Easily scan through a Wi-Fi network to find devices, their IP address and hostname."
 

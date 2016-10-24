@@ -11,6 +11,7 @@
 		38C772F10929FF70C2903BC34A8DE852 /* Pods-LANScanner_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CB5A3A46E5601BCDB14DA5DA982830BB /* Pods-LANScanner_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4497451751699C453E8EFCDE50326BBD /* LANScanner-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CFE8328952BDAE17D00B7C34B9199F7 /* LANScanner-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51B717F369546157836738BE0A0D59AE /* LANScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F29091EF005EB3F6484EBAA776AB15 /* LANScanner.swift */; };
+		61D80E2F1DBE988B00478A96 /* LANHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D80E2E1DBE988B00478A96 /* LANHost.swift */; };
 		91CC3408E42892A9FA248BCBCB1DEA91 /* SimplePingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20F391D68C1B99D138FC3B0033260FC /* SimplePingHelper.swift */; };
 		CF286641AD1D916D9E8A589826981C7F /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F7790CE271C0E3F743ABE2918353F4 /* SimplePing.m */; };
 		D4F6882AD3BD25C3C9ACCA7F12791869 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
@@ -41,6 +42,7 @@
 		531FDE1FDC9CEF08AB97D9ADD40D4924 /* LANScanner.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = LANScanner.modulemap; sourceTree = "<group>"; };
 		5D69313E3CCD33BCF7BBB19E5EEFD468 /* LANScanner-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LANScanner-dummy.m"; sourceTree = "<group>"; };
 		5EBD767A82A9790AFC8D487E4FCCD30D /* LANScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LANScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61D80E2E1DBE988B00478A96 /* LANHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LANHost.swift; sourceTree = "<group>"; };
 		6C6308C4431B2EEC598D8BDDC2805F48 /* Pods_LANScanner_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LANScanner_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F62CCDECCAD5F0846691374BBF798F1 /* Pods-LANScanner_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LANScanner_Example.release.xcconfig"; sourceTree = "<group>"; };
 		75FEB5B67BDF386B4E8D8A397FD63DF2 /* Pods-LANScanner_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LANScanner_Example-dummy.m"; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				3BAFD18C677CB24748328839416A0F62 /* LANDevice.swift */,
 				36F29091EF005EB3F6484EBAA776AB15 /* LANScanner.swift */,
+				61D80E2E1DBE988B00478A96 /* LANHost.swift */,
 				50F3563404A3989F3B2DFC19EA8AE725 /* SimplePing.h */,
 				C8F7790CE271C0E3F743ABE2918353F4 /* SimplePing.m */,
 				D20F391D68C1B99D138FC3B0033260FC /* SimplePingHelper.swift */,
@@ -293,6 +296,7 @@
 				367535B36F29448AFA91F0F257B0D520 /* LANDevice.swift in Sources */,
 				D542293907AD0B9475C18861B3625F96 /* LANScanner-dummy.m in Sources */,
 				51B717F369546157836738BE0A0D59AE /* LANScanner.swift in Sources */,
+				61D80E2F1DBE988B00478A96 /* LANHost.swift in Sources */,
 				CF286641AD1D916D9E8A589826981C7F /* SimplePing.m in Sources */,
 				91CC3408E42892A9FA248BCBCB1DEA91 /* SimplePingHelper.swift in Sources */,
 			);
@@ -318,6 +322,39 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0B2D6BF7C15EFF741E45F115A4892AFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6C46BDAA60723DD8BFE21F917D4075B /* LANScanner.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/LANScanner/LANScanner-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/LANScanner/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/LANScanner/LANScanner.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = LANScanner;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		3D7629FE95C9CD7A6CF48AF393026233 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 41DAC8BDADFE2A782AE326DFE896EB6F /* Pods-LANScanner_Example.debug.xcconfig */;
@@ -429,38 +466,6 @@
 			};
 			name = Release;
 		};
-		9E0737456BCF40353CDBC07280C05F46 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6C46BDAA60723DD8BFE21F917D4075B /* LANScanner.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/LANScanner/LANScanner-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/LANScanner/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/LANScanner/LANScanner.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = LANScanner;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		9E1E4E48AF2EAB23169E611BF694090A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -505,7 +510,7 @@
 			};
 			name = Debug;
 		};
-		B6FB2A9E437809B4719FBF1E6DF94AC9 /* Release */ = {
+		F0284271B41CB913D7266D7A3B725D9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D6C46BDAA60723DD8BFE21F917D4075B /* LANScanner.xcconfig */;
 			buildSettings = {
@@ -530,6 +535,7 @@
 				PRODUCT_NAME = LANScanner;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -560,8 +566,8 @@
 		82AC38F52CD69B65F41CBE2700FEA224 /* Build configuration list for PBXNativeTarget "LANScanner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9E0737456BCF40353CDBC07280C05F46 /* Debug */,
-				B6FB2A9E437809B4719FBF1E6DF94AC9 /* Release */,
+				0B2D6BF7C15EFF741E45F115A4892AFF /* Debug */,
+				F0284271B41CB913D7266D7A3B725D9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

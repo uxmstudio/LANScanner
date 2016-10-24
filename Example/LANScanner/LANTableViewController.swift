@@ -30,16 +30,16 @@ class LANTableViewController: UITableViewController, LANScannerDelegate {
     }
 
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.devices.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("scanCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "scanCell", for: indexPath)
         let device = self.devices[indexPath.row]
         
         cell.textLabel?.text = device.hostName
@@ -62,13 +62,13 @@ class LANTableViewController: UITableViewController, LANScannerDelegate {
     
     
     // MARK - LANScanner Delegate
-    func LANScannerDiscovery(device: LANDevice) {
+    func LANScannerDiscovery(_ device: LANDevice) {
         
         self.devices.append(device)
         self.tableView.reloadData()
     }
     
-    func LANScannerFailed(error: NSError) {
+    func LANScannerFailed(_ error: NSError) {
         
         print("Unable to scan: \(error)")
     }
