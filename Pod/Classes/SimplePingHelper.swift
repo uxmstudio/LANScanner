@@ -48,7 +48,7 @@ class SimplePingHelper: NSObject, SimplePingDelegate {
     
     func successPing() {
         self.killPing()
-        self.target.perform(self.selector, with: [
+        let _ = self.target.perform(self.selector, with: [
             "status": true,
             "address": self.address
             ])
@@ -57,7 +57,7 @@ class SimplePingHelper: NSObject, SimplePingDelegate {
     func failPing(_ reason: String) {
         
         self.killPing()
-        self.target.perform(self.selector, with: [
+        let _ = self.target.perform(self.selector, with: [
             "status": false,
             "address": self.address,
             "error": reason
@@ -77,11 +77,11 @@ class SimplePingHelper: NSObject, SimplePingDelegate {
         self.simplePing?.send(with: nil)
     }
     
-    func simplePing(_ pinger: SimplePing!, didFailWithError error: NSError!) {
+    func simplePing(_ pinger: SimplePing!, didFailWithError error: Error!) {
         self.failPing("didFailWithError")
     }
     
-    func simplePing(_ pinger: SimplePing!, didFailToSendPacket packet: Data!, error: NSError!) {
+    func simplePing(_ pinger: SimplePing!, didFailToSendPacket packet: Data!, error: Error!) {
         self.failPing("didFailToSendPacked")
     }
     

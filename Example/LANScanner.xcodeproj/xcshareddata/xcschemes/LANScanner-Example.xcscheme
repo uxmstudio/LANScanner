@@ -23,15 +23,15 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "LANScanner_Tests.xctest"
-               BlueprintName = "LANScanner_Tests"
-               ReferencedContainer = "container:LANScanner.xcodeproj">
+               BlueprintIdentifier = "E5D6E6E3C8CF876E364016C96A38B57D"
+               BuildableName = "Pods_LANScanner_Example.framework"
+               BlueprintName = "Pods-LANScanner_Example"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,16 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "LANScanner_Tests.xctest"
-               BlueprintName = "LANScanner_Tests"
-               ReferencedContainer = "container:LANScanner.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

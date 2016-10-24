@@ -166,7 +166,7 @@ open class LANScanner: NSObject {
         
         /// Get info of the passed IP address
         if getaddrinfo(ipaddress, nil, nil, &ifinfo) == 0 {
-
+            
             var ptr = ifinfo
             while ptr != nil {
                 
@@ -175,11 +175,11 @@ open class LANScanner: NSObject {
                 /// Parse the hostname for addresses
                 var hst = [CChar](repeating: 0, count: Int(NI_MAXHOST))
                 if getnameinfo(interface.ai_addr, socklen_t(interface.ai_addrlen), &hst, socklen_t(hst.count),
-                    nil, socklen_t(0), 0) == 0 {
+                               nil, socklen_t(0), 0) == 0 {
                     
-                        if let address = String(validatingUTF8: hst) {
-                            hostName = address
-                        }
+                    if let address = String(validatingUTF8: hst) {
+                        hostName = address
+                    }
                 }
                 ptr = interface.ai_next
             }
@@ -215,17 +215,19 @@ open class LANScanner: NSObject {
                             /// Convert interface address to a human readable string
                             var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
                             if (getnameinfo(&addr, socklen_t(addr.sa_len), &hostname, socklen_t(hostname.count),
-                                nil, socklen_t(0), NI_NUMERICHOST) == 0) {
-                                    if let address = String(validatingUTF8: hostname) {
-                                        
-                                        var net = interface.ifa_netmask.pointee
-                                        var netmaskName = [CChar](repeating: 0, count: Int(NI_MAXHOST))
-                                        getnameinfo(&net, socklen_t(net.sa_len), &netmaskName, socklen_t(netmaskName.count),
-                                            nil, socklen_t(0), NI_NUMERICHOST) == 0
+                                            nil, socklen_t(0), NI_NUMERICHOST) == 0) {
+                                if let address = String(validatingUTF8: hostname) {
+                                    
+                                    var net = interface.ifa_netmask.pointee
+                                    var netmaskName = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                                    
+                                    if getnameinfo(&net, socklen_t(net.sa_len), &netmaskName, socklen_t(netmaskName.count),
+                                                   nil, socklen_t(0), NI_NUMERICHOST) == 0 {
                                         if let netmask = String(validatingUTF8: netmaskName) {
                                             localAddress = NetInfo(ip: address, netmask: netmask)
                                         }
                                     }
+                                }
                             }
                         }
                     }
