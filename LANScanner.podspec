@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "LANScanner"
-  s.version          = "0.2.0"
+  s.version          = "0.2.1"
   s.summary          = "Scan a Wi-Fi network for devices."
   s.description      = "Easily scan through a Wi-Fi network to find devices, their IP address and hostname."
 
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.author           = { "Chris Anderson" => "chris@uxmstudio.com" }
   s.source           = { :git => "https://github.com/uxmstudio/LANScanner.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '8.0'
+  s.platform     = :ios, '9.0'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*', 'Pod/Module/**/*.{h,m}'

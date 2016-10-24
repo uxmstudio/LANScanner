@@ -18,7 +18,6 @@ import UIKit
 #endif
 #endif
 
-
 @objc public protocol LANScannerDelegate
 {
     /**
