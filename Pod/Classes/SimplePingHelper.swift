@@ -10,12 +10,12 @@ import UIKit
 
 class SimplePingHelper: NSObject, SimplePingDelegate {
     
-    private var address:String
-    private var simplePing:SimplePing?
-    private var target:AnyObject
-    private var selector:Selector
+    fileprivate var address:String
+    fileprivate var simplePing:SimplePing?
+    fileprivate var target:AnyObject
+    fileprivate var selector:Selector
     
-    static func start(address:String, target:AnyObject, selector:Selector) {
+    static func start(_ address:String, target:AnyObject, selector:Selector) {
         
         SimplePingHelper(address: address, target: target, selector: selector).start()
     }
@@ -36,7 +36,7 @@ class SimplePingHelper: NSObject, SimplePingDelegate {
     func start() {
         
         self.simplePing?.start()
-        self.performSelector(#selector(SimplePingHelper.endTime), withObject: nil, afterDelay: 1)
+        self.perform(#selector(SimplePingHelper.endTime), with: nil, afterDelay: 1)
     }
     
     
@@ -48,16 +48,16 @@ class SimplePingHelper: NSObject, SimplePingDelegate {
     
     func successPing() {
         self.killPing()
-        self.target.performSelector(self.selector, withObject: [
+        self.target.perform(self.selector, with: [
             "status": true,
             "address": self.address
             ])
     }
     
-    func failPing(reason: String) {
+    func failPing(_ reason: String) {
         
         self.killPing()
-        self.target.performSelector(self.selector, withObject: [
+        self.target.perform(self.selector, with: [
             "status": false,
             "address": self.address,
             "error": reason
@@ -73,19 +73,19 @@ class SimplePingHelper: NSObject, SimplePingDelegate {
     
     
     // MARK: - SimplePing Delegate
-    func simplePing(pinger: SimplePing!, didStartWithAddress address: NSData!) {
-        self.simplePing?.sendPingWithData(nil)
+    func simplePing(_ pinger: SimplePing!, didStartWithAddress address: Data!) {
+        self.simplePing?.send(with: nil)
     }
     
-    func simplePing(pinger: SimplePing!, didFailWithError error: NSError!) {
+    func simplePing(_ pinger: SimplePing!, didFailWithError error: NSError!) {
         self.failPing("didFailWithError")
     }
     
-    func simplePing(pinger: SimplePing!, didFailToSendPacket packet: NSData!, error: NSError!) {
+    func simplePing(_ pinger: SimplePing!, didFailToSendPacket packet: Data!, error: NSError!) {
         self.failPing("didFailToSendPacked")
     }
     
-    func simplePing(pinger: SimplePing!, didReceivePingResponsePacket packet: NSData!) {
+    func simplePing(_ pinger: SimplePing!, didReceivePingResponsePacket packet: Data!) {
         self.successPing()
     }
     

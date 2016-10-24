@@ -8,8 +8,8 @@
 
 import UIKit
 
-public class LANDevice: NSObject {
+open class LANDevice: NSObject {
     
-    public var ipAddress = ""
-    public var hostName = ""
+    open var ipAddress = ""
+    open var hostName = ""
 }

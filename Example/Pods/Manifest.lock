@@ -1,14 +1,16 @@
 PODS:
-  - LANScanner (0.1.0)
+  - LANScanner (0.1.2)
 
 DEPENDENCIES:
   - LANScanner (from `../`)
 
 EXTERNAL SOURCES:
   LANScanner:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  LANScanner: 22f74dab294ce95bbbcb9d4c2790f272192c6332
+  LANScanner: 83303fed58d15bef69dd3837cb5ee1e6d93fd0cc
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 873615bf4eeb7fd97f3fe5f4d2ece08bfb48d7fa
+
+COCOAPODS: 1.1.0.rc.2

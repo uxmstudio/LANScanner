@@ -23,25 +23,25 @@ import UIKit
     /**
      Triggered when the scanning has discovered a new device
      */
-    optional func LANScannerDiscovery(device: LANDevice)
+    @objc optional func LANScannerDiscovery(_ device: LANDevice)
     
     /**
      Triggered when all of the scanning has finished
      */
-    optional func LANScannerFinished()
+    @objc optional func LANScannerFinished()
     
     /**
      Triggered when the scanner starts over
      */
-    optional func LANScannerRestarted()
+    @objc optional func LANScannerRestarted()
     
     /**
      Triggered when there is an error while scanning
      */
-    optional func LANScannerFailed(error: NSError)
+    @objc optional func LANScannerFailed(_ error: NSError)
 }
 
-public class LANScanner: NSObject {
+open class LANScanner: NSObject {
     
     public struct NetInfo {
         let ip: String
@@ -49,14 +49,14 @@ public class LANScanner: NSObject {
     }
     
     
-    public var delegate: LANScannerDelegate?
-    public var continuous:Bool = true
+    open var delegate: LANScannerDelegate?
+    open var continuous:Bool = true
     
     
     var localAddress:String?
     var baseAddress:String?
     var currentHostAddress:Int = 0
-    var timer:NSTimer?
+    var timer:Timer?
     var netMask:String?
     var baseAddressEnd:Int = 0
     var timerIterationNumber:Int = 0
@@ -75,7 +75,7 @@ public class LANScanner: NSObject {
     }
     
     // MARK: - Actions
-    public func startScan() {
+    open func startScan() {
         
         if let localAddress = LANScanner.getLocalAddress() {
             
@@ -95,7 +95,7 @@ public class LANScanner: NSObject {
                     self.baseAddressEnd = 255
                 }
                 
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: #selector(LANScanner.pingAddress), userInfo: nil, repeats: true)
+                self.timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(LANScanner.pingAddress), userInfo: nil, repeats: true)
             }
         }
         else {
@@ -109,7 +109,7 @@ public class LANScanner: NSObject {
         }
     }
     
-    public func stopScan() {
+    open func stopScan() {
         
         self.timer?.invalidate()
     }
@@ -126,7 +126,7 @@ public class LANScanner: NSObject {
         }
     }
     
-    func pingResult(object:AnyObject) {
+    func pingResult(_ object:AnyObject) {
         
         self.timerIterationNumber += 1
         
@@ -159,23 +159,23 @@ public class LANScanner: NSObject {
     
     
     // MARK: - Network methods
-    public static func getHostName(ipaddress: String) -> String? {
+    open static func getHostName(_ ipaddress: String) -> String? {
         
         var hostName:String? = nil
-        var ifinfo: UnsafeMutablePointer<addrinfo> = nil
+        var ifinfo: UnsafeMutablePointer<addrinfo>? = nil
         
         /// Get info of the passed IP address
         if getaddrinfo(ipaddress, nil, nil, &ifinfo) == 0 {
             
-            for (var ptr = ifinfo; ptr != nil; ptr = ptr.memory.ai_next) {
+            for (var ptr = ifinfo; ptr != nil; ptr = ptr?.pointee.ai_next) {
                 
-                let interface = ptr.memory
+                let interface = ptr?.pointee
                 
                 /// Parse the hosname for addresses
-                var hst = [CChar](count: Int(NI_MAXHOST), repeatedValue: 0)
-                if (getnameinfo(interface.ai_addr, socklen_t(interface.ai_addrlen), &hst, socklen_t(hst.count),
+                var hst = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                if (getnameinfo(interface?.ai_addr, socklen_t((interface?.ai_addrlen)!), &hst, socklen_t(hst.count),
                     nil, socklen_t(0), 0) == 0) {
-                        if let address = String.fromCString(hst) {
+                        if let address = String(validatingUTF8: hst) {
                             hostName = address
                         }
                 }
@@ -186,7 +186,7 @@ public class LANScanner: NSObject {
         return hostName
     }
     
-    public static func getLocalAddress() -> NetInfo? {
+    open static func getLocalAddress() -> NetInfo? {
         var localAddress:NetInfo?
         
         /// Get list of all interfaces on the local machine:
@@ -204,19 +204,19 @@ public class LANScanner: NSObject {
                     if addr.sa_family == UInt8(AF_INET) || addr.sa_family == UInt8(AF_INET6) {
                         
                         /// Narrow it down to just the wifi card
-                        if let name = String.fromCString(interface.ifa_name) where name == "en0" {
+                        if let name = String.fromCString(interface.ifa_name) , name == "en0" {
                             
                             /// Convert interface address to a human readable string
-                            var hostname = [CChar](count: Int(NI_MAXHOST), repeatedValue: 0)
+                            var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
                             if (getnameinfo(&addr, socklen_t(addr.sa_len), &hostname, socklen_t(hostname.count),
                                 nil, socklen_t(0), NI_NUMERICHOST) == 0) {
-                                    if let address = String.fromCString(hostname) {
+                                    if let address = String(validatingUTF8: hostname) {
                                         
                                         var net = ptr.memory.ifa_netmask.memory
-                                        var netmaskName = [CChar](count: Int(NI_MAXHOST), repeatedValue: 0)
+                                        var netmaskName = [CChar](repeating: 0, count: Int(NI_MAXHOST))
                                         getnameinfo(&net, socklen_t(net.sa_len), &netmaskName, socklen_t(netmaskName.count),
                                             nil, socklen_t(0), NI_NUMERICHOST) == 0
-                                        if let netmask = String.fromCString(netmaskName) {
+                                        if let netmask = String(validatingUTF8: netmaskName) {
                                             localAddress = NetInfo(ip: address, netmask: netmask)
                                         }
                                     }
@@ -230,7 +230,7 @@ public class LANScanner: NSObject {
         return localAddress
     }
     
-    func addressParts(address: String) -> [String] {
-        return address.componentsSeparatedByString(".")
+    func addressParts(_ address: String) -> [String] {
+        return address.components(separatedBy: ".")
     }
 }
