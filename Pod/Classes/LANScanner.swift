@@ -44,8 +44,8 @@ import UIKit
 open class LANScanner: NSObject {
     
     public struct NetInfo {
-        let ip: String
-        let netmask: String
+        public let ip: String
+        public let netmask: String
     }
     
     
