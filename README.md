@@ -1,3 +1,6 @@
+# THIS REPOSITORY IS NO LONGER MAINTAINED
+
+
 # LANScanner
 
 [![Version](https://img.shields.io/cocoapods/v/LANScanner.svg?style=flat)](http://cocoapods.org/pods/LANScanner)
