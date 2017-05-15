@@ -208,9 +208,9 @@ open class LANScanner: NSObject {
                 if (flags & (IFF_UP|IFF_RUNNING|IFF_LOOPBACK)) == (IFF_UP|IFF_RUNNING) {
                     if addr.sa_family == UInt8(AF_INET) || addr.sa_family == UInt8(AF_INET6) {
                         
-                        /// Narrow it down to just the wifi card
+                        /// Narrow it down to the interfaces matching Standard Ethernet
                         let name = String(cString:interface.ifa_name)
-                        if name == "en0" {
+                        if name.range(of:"en") != nil {
                             
                             /// Convert interface address to a human readable string
                             var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
